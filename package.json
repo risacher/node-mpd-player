@@ -1,0 +1,26 @@
+{
+  "name": "node-mpd-player",
+  "version": "1.0.0",
+  "description": "mpd player class",
+  "main": "Player.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/risacher/node-mpd-player.git"
+  },
+  "keywords": [
+    "mpd",
+    "node"
+  ],
+  "author": "Dan Risacher, dan@risacher.org",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/risacher/node-mpd-player/issues"
+  },
+  "homepage": "https://github.com/risacher/node-mpd-player#readme",
+  "dependencies": {
+    "mpdsocket": "git://github.com/risacher/node-mpdsocket.git"
+  }
+}
