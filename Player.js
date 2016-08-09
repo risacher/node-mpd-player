@@ -12,10 +12,9 @@ var MpdSocket = require('mpdsocket');
 var EventEmitter = require('events').EventEmitter;
 util.inherits(Player, EventEmitter);
 
-function Player(statusChangeCB) {
+function Player() {
     this.idle = false;
     this.status = { };
-    this.statusChangeCB = statusChangeCB;
     this.restartMpd();
     return this;
 }
@@ -79,12 +78,10 @@ Player.prototype.processStatus = function (r) {
     var self = this;
     var changed = false;
     if (typeof(r) == 'undefined') { return; }
-    if (typeof(this.statusChangeCB) == 'function') {
-        if ((r.state !== this.status.state) ||
-            (r.playlist !== this.status.playlist) ||
-            (r.songid !== this.status.songid)) {
-            this.statusChangeCB.call(self, r);
-        }
+    if ((r.state !== this.status.state) ||
+        (r.playlist !== this.status.playlist) ||
+        (r.songid !== this.status.songid)) {
+        this.emit('statusChange', r);
     }
     this.status = r;
     try {
@@ -107,7 +104,7 @@ Player.prototype.restartMpd = function () {
             self.mpd.send('status', function (e, r) {
                 console.log("e: ", e);
                 console.log("r: ", r);
-                self.statusChangeCB(r);
+                self.emit('statusChange', r);
                 self.mpd.send('idle', function (e, r) { self.processIdle(r); });
                 self.idle = true;
             });
